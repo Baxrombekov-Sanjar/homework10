@@ -11,11 +11,10 @@ import foods from "../../../assets/foods.png";
 import map from "../../../assets/map.png";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
-import { useState } from "react";
+import { useGlobalContext } from "../../../context";
 
 export default function Main() {
-  const [like, setLike] = useState(false);
-  console.log(like);
+  const {like, setLike} =useGlobalContext();
   return (
     <main className="main">
       <section className="main__slider">

@@ -18,6 +18,8 @@ const AppProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [basket, setBasket] = useState(getStore("basket"));
+  const [favourites, setFavourites] = useState(getStore("favourites"));
+  const [like, setLike] = useState(false);
 
   //   CRUD
   const handeSubmit = (e) => {
@@ -54,6 +56,11 @@ const AppProvider = ({ children }) => {
     const newItem = product.find((item) => item.id === id);
     setBasket([...basket, newItem]);
   };
+  const addToFavourites = (id) => {
+    const newItem = product.find((item) => item.id === id);
+    setLike(!like)
+    setFavourites([...favourites, newItem]);
+  };
   function goToaddCard() {
     navigate("/add");
     console.log(15);
@@ -64,7 +71,8 @@ const AppProvider = ({ children }) => {
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("products", JSON.stringify(product));
     localStorage.setItem("basket", JSON.stringify(basket));
-  }, [users, product, basket]);
+    localStorage.setItem("favourites", JSON.stringify(favourites));
+  }, [users, product, basket,favourites]);
 
   return (
     <AppContext.Provider
@@ -86,6 +94,11 @@ const AppProvider = ({ children }) => {
         removeItem,
         addToBasket,
         goToaddCard,
+        like,
+        setLike,
+        favourites, 
+        setFavourites,
+        addToFavourites
       }}
     >
       {children}

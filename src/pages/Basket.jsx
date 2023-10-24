@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import Footer from "../components/HomePage/Footer/Footer";
 import Header from "../components/HomePage/Header/Header";
-import '../App.css'
+// import '../App.css'
 import { useGlobalContext } from "../context";
 
 export default function Basket() {
@@ -15,7 +15,7 @@ export default function Basket() {
           const { id, title, price } = item;
           return (
             <div key={id}>
-              <h3>{title}: {price} uzs</h3>
+              <h3>{title}: {price} ₽</h3>
             </div>
           );
         })}

@@ -3,10 +3,10 @@ import "./Products.css";
 import product1 from "../../assets/image (1).png";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
-import { useState } from "react";
+import { useGlobalContext } from "../../context";
 
 export default function Products({ goToaddCard }) {
-  const [like, setLike] = useState(false);
+  const {like, setLike} = useGlobalContext()
   return (
     <main className="main">
       <div className="main__products">
