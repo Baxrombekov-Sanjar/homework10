@@ -1,0 +1,25 @@
+.footer {
+    background: var(--main-bg-page, #fbf8ec);
+    padding: 20px 116px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-image: url('../../../assets/pattern2.png');
+    font-size: 12px;
+}
+.footer__list {
+    display: flex;
+    list-style: none;
+    width: 700px;
+    justify-content: space-between;
+}
+.phone {
+    display: flex;
+    margin-top: 40px;
+}
+.phone i {
+    margin-right: 15px;
+}
+.design {
+    margin-top: 26px;
+}
