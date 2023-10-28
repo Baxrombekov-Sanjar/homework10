@@ -4,13 +4,68 @@ import product1 from "../../assets/image (1).png";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
 import { useGlobalContext } from "../../context";
+import { useNavigate } from "react-router-dom";
 
 export default function Products({ goToaddCard }) {
-  const {like, setLike} = useGlobalContext()
+  const navigate = useNavigate();
+  const { like, setLike, product, removeItem, addToBasket } =
+    useGlobalContext();
   return (
     <main className="main">
       <div className="main__products">
         <h2>Все продукты</h2>
+        <div
+          className="main main__products-item2"
+          style={{
+            paddingTop: "50px",
+            paddingBottom: "50px",
+          }}
+        >
+          {product.map((item) => {
+            const { id, title, price, img, liked } = item;
+            return (
+              <div key={id}>
+                {like ? (
+                  <FcLike
+                    className="producticon"
+                    size={25}
+                    onClick={() => {
+                      setLike(!like);
+                      console.log(liked);
+                    }}
+                  />
+                ) : (
+                  <AiOutlineHeart
+                    style={{ color: "#fff" }}
+                    className="producticon"
+                    size={25}
+                    onClick={() => {
+                      setLike(!like);
+                      console.log(liked);
+                    }}
+                  />
+                )}
+                <img src={img} alt="product" />
+                <h3>{price}  ₽</h3>
+                <h2>{title}</h2>
+                <div>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star"></i>
+                  <i className="fa-regular fa-star"></i>
+                </div>
+                <button onClick={() => navigate(`/single/${id}`)}>Подробнее...</button>
+                <button className="basketBtn" onClick={() => addToBasket(id)}>
+                В корзину
+                </button>
+                <button className="remove" onClick={() => removeItem(id)}>
+                  Удалить
+                </button>
+              </div>
+            );
+          })}
+        </div>
         <div className="main__products-item">
           <div>
             {like ? (

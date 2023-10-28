@@ -3,8 +3,8 @@ import { Navigate } from "react-router-dom";
 import { useGlobalContext } from "../context";
 
 export default function ProtectedRoute({ children }) {
-  const { user } = useGlobalContext();
-  if (!user) {
+  const { users } = useGlobalContext();
+  if (!users.name) {
     return <Navigate to="/" />;
   }
 

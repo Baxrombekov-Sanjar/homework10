@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useParams } from "react-router-dom";
 import "../App.css";
-import Header from "./HomePage/Header/Header";
 import Footer from "./HomePage/Footer/Footer";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
@@ -13,7 +12,6 @@ export default function SinglePage() {
   let singleProduct = product.find((item) => item.id === id);
   return (
     <div className="main">
-      <Header />
       <div className="singleproduct">
         <img src={singleProduct.img} alt="singleproduct" />
         {like ? (

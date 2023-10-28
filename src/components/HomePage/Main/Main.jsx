@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/no-unknown-property */
 import slider from "../../../assets/Sliders.png";
 import "./Main.css";
@@ -12,9 +13,12 @@ import map from "../../../assets/map.png";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
 import { useGlobalContext } from "../../../context";
+import { useNavigate } from "react-router-dom";
 
 export default function Main() {
-  const {like, setLike} =useGlobalContext();
+  const navigate = useNavigate();
+  const { like, setLike, productData, addToBasket2, removeItem, handeSubmit2 } =
+    useGlobalContext();
   return (
     <main className="main">
       <section className="main__slider">
@@ -28,35 +32,46 @@ export default function Main() {
           </p>
         </div>
         <div className="main__promotion-products">
-          <div>
-            {like ? (
-              <FcLike
-                className="producticon"
-                size={25}
-                onClick={() => setLike(!like)}
-              />
-            ) : (
-              <AiOutlineHeart
-                className="producticon"
-                size={25}
-                onClick={() => setLike(!like)}
-              />
-            )}
-            <img src={product1} alt="product" />
-            <b>139,99 ₽</b>
-            <p>
-              Комбайн КЗС-1218 <br /> «ДЕСНА-ПОЛЕСЬЕ GS12»
-            </p>
-            <div>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-solid fa-star"></i>
-              <i className="fa-regular fa-star"></i>
-              <i className="fa-regular fa-star"></i>
-            </div>
-            <button>В корзину</button>
-          </div>
-          <div>
+          {productData.map((item) => {
+            const { id, img, title, price } = item;
+            return (
+              <div key={id}>
+                {like ? (
+                  <FcLike
+                    className="producticon"
+                    size={25}
+                    onClick={() => setLike(!like)}
+                  />
+                ) : (
+                  <AiOutlineHeart
+                    className="producticon"
+                    size={25}
+                    onClick={() => setLike(!like)}
+                  />
+                )}
+                <img src={img} alt="product" />
+                <b>{price} ₽</b>
+                <p>{title}</p>
+                <div>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star"></i>
+                  <i className="fa-regular fa-star"></i>
+                </div>
+                <button onClick={() => navigate(`/single/${id}`)}>
+                  Подробнее...
+                </button>
+                <button className="basketBtn" onClick={() => addToBasket2(id)}>
+                  В корзину
+                </button>
+                <button className="remove" onClick={() => removeItem(id)}>
+                  Удалить
+                </button>
+              </div>
+            );
+          })}
+          {/* <div>
             {like ? (
               <FcLike
                 className="producticon"
@@ -142,7 +157,7 @@ export default function Main() {
               <i className="fa-regular fa-star"></i>
             </div>
             <button>В корзину</button>
-          </div>
+          </div> */}
         </div>
       </section>
       <section className="main__products">

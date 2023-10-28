@@ -1,17 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useGlobalContext } from "../context";
-import NewProduct from "../pages/NewProduct";
 import Footer from "./HomePage/Footer/Footer";
-import Header from "./HomePage/Header/Header";
 import "./Products/Products.css";
 
 export default function AddCard() {
-  const { name, setName, price, setPrice, handeSubmit2} =
-    useGlobalContext();
+  const { name, setName, price, setPrice, handeSubmit2 } = useGlobalContext();
   return (
     <div>
-      <Header />
-      <div className="main" style={{ paddingTop: "40px" }}>
+      <div className="main" style={{ paddingTop: "40px", paddingBottom: "40px" }}>
         <form
           style={{ paddingLeft: "116px", paddingRight: "116px" }}
           action=""
@@ -31,10 +27,18 @@ export default function AddCard() {
             onChange={(e) => setPrice(e.target.value)}
           />
           <br />
-          <button>Add</button>
+          <button
+            onClick={() => {
+              name && price
+                ? alert("Maxsulot Muvaffaqqiyatli Qo'shildi")
+                : console.log("err");
+            }}
+          >
+            Add
+          </button>
         </form>
       </div>
-      <NewProduct />
+
       <Footer />
     </div>
   );

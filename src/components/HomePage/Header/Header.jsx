@@ -5,7 +5,7 @@ import "./Header.css";
 import { Link } from "react-router-dom";
 
 export default function Header() {
-  const { user } = useGlobalContext();
+  const { users } = useGlobalContext();
   return (
     <header className="header">
       <nav className="header__nav">
@@ -43,7 +43,7 @@ export default function Header() {
           </div>
           <div>
             <img src={userUz} alt="user" />
-            <span>{user.name}</span>
+            <span>{users.name}</span>
             <i className="fa-solid fa-chevron-down"></i>
           </div>
         </div>

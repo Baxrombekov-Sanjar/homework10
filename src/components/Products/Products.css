@@ -12,7 +12,7 @@
 }
 .main__products-item2 {
   display: flex;
-  gap: 30px;
+  gap: 40px;
   flex-wrap: wrap;
 }
 .main__products-item > div, .main__products-item2 > div {

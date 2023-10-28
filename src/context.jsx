@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { uid } from "uid";
 import getStore from "./utils/get";
+import productData from "./utils/data";
 
 const AppContext = createContext();
 
@@ -13,6 +14,8 @@ const AppProvider = ({ children }) => {
   const img = "https://picsum.photos/200/300";
 
   //   useStates
+
+  const [count, setCount] = useState(Number(getStore()));
   const [user, setUser] = useState("");
   const [product, setProduct] = useState(getStore("products"));
   const [name, setName] = useState("");
@@ -20,6 +23,10 @@ const AppProvider = ({ children }) => {
   const [basket, setBasket] = useState(getStore("basket"));
   const [favourites, setFavourites] = useState(getStore("favourites"));
   const [like, setLike] = useState(false);
+  const [users, setUsers] = useState(getStore("users"));
+  const [defaultProducts, setDefaultProducts] = useState(
+    getStore("defaultProducts")
+  );
 
   //   CRUD
   const handeSubmit = (e) => {
@@ -28,11 +35,8 @@ const AppProvider = ({ children }) => {
       alert("форма пусто");
     } else {
       const newItem = { id: id, name: user };
-      setUsers([...users, newItem]);
+      setUsers([...user, newItem]);
       navigate("/dash");
-      if (user.length > 0) {
-        // navigate("/");
-      }
       setUser("");
     }
   };
@@ -40,7 +44,13 @@ const AppProvider = ({ children }) => {
   const handeSubmit2 = (e) => {
     e.preventDefault();
     if (name && price) {
-      const newItem = { id: id, title: name, price: price, img: img };
+      const newItem = {
+        id: id,
+        title: name,
+        price: price,
+        img: img,
+        liked: like,
+      };
       setProduct([...product, newItem]);
       setName("");
       setPrice("");
@@ -50,15 +60,26 @@ const AppProvider = ({ children }) => {
   };
   const removeItem = (id) => {
     const newitem = product.filter((item) => item.id !== id);
-    setProduct(newitem);
+    const newitem2 = defaultProducts.filter((item) => item.id !== id);
+    setProduct(newitem, newitem2);
   };
   const addToBasket = (id) => {
     const newItem = product.find((item) => item.id === id);
-    setBasket([...basket, newItem]);
+    if (basket.id === product.id) {
+      setCount((count) => (count += 1));
+      setBasket([...basket, newItem]);
+    } else {
+      setBasket([...basket, newItem]);
+    }
+  };
+  const addToBasket2 = (id) => {
+    const newItem2 = defaultProducts.find((item) => item.id === id);
+    console.log(defaultProducts);
+    setBasket([...basket, newItem2]);
   };
   const addToFavourites = (id) => {
     const newItem = product.find((item) => item.id === id);
-    setLike(!like)
+    setLike(!like);
     setFavourites([...favourites, newItem]);
   };
   function goToaddCard() {
@@ -66,13 +87,14 @@ const AppProvider = ({ children }) => {
     console.log(15);
   }
 
-  const [users, setUsers] = useState(getStore("users"));
   useEffect(() => {
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("products", JSON.stringify(product));
     localStorage.setItem("basket", JSON.stringify(basket));
     localStorage.setItem("favourites", JSON.stringify(favourites));
-  }, [users, product, basket,favourites]);
+    localStorage.setItem("defaultProducts", JSON.stringify(defaultProducts));
+    localStorage.setItem("count", JSON.stringify(count));
+  }, [users, product, basket, favourites, count, defaultProducts]);
 
   return (
     <AppContext.Provider
@@ -96,9 +118,15 @@ const AppProvider = ({ children }) => {
         goToaddCard,
         like,
         setLike,
-        favourites, 
+        favourites,
         setFavourites,
-        addToFavourites
+        addToFavourites,
+        count,
+        setCount,
+        productData,
+        setDefaultProducts,
+        defaultProducts,
+        addToBasket2
       }}
     >
       {children}
